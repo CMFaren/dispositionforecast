@@ -10,9 +10,23 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-  
+
     gtag('config', 'G-HNHPCS48FG');
   </script>
+
+  <script>
+    // ===== GA4 Tab Tracking =====
+    function trackTab(tabName) {
+      try{
+        if (typeof gtag === "function") {
+          gtag('event', 'tab_view', { tab_name: String(tabName || "").trim() || "unknown" });
+        }
+      }catch(e){
+        // ignore
+      }
+    }
+  </script>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap');
 
@@ -796,7 +810,7 @@
 <script>
   const DATA_PATH = "./data.json";
 
-  function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+  function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;"," >":"&gt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
   function num(v){
     const m=String(v??"").replace(/,/g,"").match(/-?[0-9]+(\.[0-9]+)?/);
     return m?Number(m[0]):NaN;
@@ -895,9 +909,6 @@
     `;
   }
 
-  /* ===============================
-     ✅ 注意事項：文字內容1 粗體 + 條款前空一行（手機/桌機共用）
-     =============================== */
   const FORCED_CLAUSE = "處置股票條款中有類股相關條款：其六日漲跌百分比與全體有價證券及同類有價證券依本項規定計算之平均值的差幅均在百分之二十以上，才符合條款。";
 
   function getNoteKeys(headers){
@@ -915,7 +926,6 @@
     return s;
   }
 
-  // ✅ 改為回傳「HTML字串」，方便做粗體與空行
   function buildNoteHTML(t1, t2, t3){
     const a = cleanText(t1);
     const b = cleanText(t2);
@@ -927,10 +937,9 @@
 
     if(a){
       html += `<div class="t1">${esc(a)}</div>`;
-      html += `<div class="gap"></div>`; // ✅ 空一行（視覺間距）
+      html += `<div class="gap"></div>`;
     }
 
-    // ✅ 條款（保留你原本的 "*"）
     html += `<div class="clause">*${esc(FORCED_CLAUSE)}</div>`;
 
     if(b){
@@ -1249,6 +1258,9 @@
 
     if(location.hash !== "#"+page) history.replaceState(null,"","#"+page);
     window.scrollTo({top:0, behavior:"smooth"});
+
+    // ✅✅✅ 這行是關鍵：每次切換 tab 就送 GA 事件
+    trackTab(page);
   }
 
   document.querySelectorAll(".tab").forEach(btn=>{
@@ -1322,7 +1334,6 @@
       titleUp.textContent = d ? `漲N% ${d} 進處置` : "漲N%進處置";
       titleDown.textContent = d ? `跌N% ${d} 進處置` : "跌N%進處置";
 
-      // ✅ 其他專區完全不動
       render(tblSoon, res.data.soonRelease);
       render(tblDisposed, res.data.disposed);
       renderFast(tblFast, res.data.fastestN);
