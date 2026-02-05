@@ -1,0 +1,1388 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <base target="_top" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EP9C6PZQ6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-9EP9C6PZQ6');
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap');
+
+    :root{
+      --bg1:#fffafa;
+      --bg2:#fff1e8;
+      --bg3:#ffdcd4;
+      --bg4:#ffc9c1;
+
+      --text:#111827;
+      --muted:#6b7280;
+      --line:rgba(17,24,39,.14);
+      --shadow:0 18px 55px rgba(17,24,39,.14);
+      --radius:18px;
+
+      --deepRed:#7c1010;
+      --deepRed2:#5f0b0b;
+      --deepRedHover:#8f1515;
+
+      --accent:#d92c2c;
+      --thead:#fff7f7;
+
+      --rowWarnBg:rgba(253,186,116,.62);
+      --rowWarnLine:rgba(234,88,12,.65);
+
+      --stickyTop:0px;
+      --tabH:44px;
+      --tabH_m:40px;
+
+      /* Mobile cards */
+      --mCardBg:#fff;
+      --mCardBorder:#e8e8e8;
+      --mCardShadow:0 1px 4px rgba(0,0,0,0.06);
+
+      --mSubtle:#f7f7f7;
+      --mSubtle2:#f3f4f6;
+
+      --mGreenBg:#f0fdf4;
+      --mGreenText:#16a34a;
+
+      --mRedBg:#fef2f2;
+      --mRedText:#dc2626;
+
+      --mCycleWarnBg:#fff7ed;
+      --mCycleWarnText:#ea580c;
+      --mCycleWarnBorder:#fed7aa;
+
+      /* Notes block */
+      --noteBg:#fffbeb;
+      --noteBorder:#fde68a;
+      --noteTitle:#b45309;
+      --noteText:#92400e;
+
+      /* Z/C rings */
+      --zBorder:#22c55e;
+      --zText:#15803d;
+      --cBorder:#ef4444;
+      --cText:#b91c1c;
+      --offBorder:#d1d5db;
+      --offText:#9ca3af;
+      --offBg:#f3f4f6;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family:"Noto Sans TC", system-ui, -apple-system, "Segoe UI", "Microsoft JhengHei", Arial, sans-serif;
+      color:var(--text);
+      background:linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg3),var(--bg4),var(--bg3),var(--bg2),var(--bg1));
+      background-size:420% 420%;
+      animation:bgFlow 18s ease-in-out infinite;
+      min-height:100vh;
+    }
+
+    @keyframes bgFlow{
+      0%{ background-position:0% 50%; }
+      50%{ background-position:100% 50%; }
+      100%{ background-position:0% 50%; }
+    }
+
+    .wrap{ max-width:1200px; margin:0 auto; padding:22px 18px 40px; }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+
+    .brand{ display:flex; align-items:baseline; gap:14px; min-width:0; }
+
+    .logo{
+      font-size:46px;
+      font-weight:950;
+      letter-spacing:.3px;
+      line-height:1;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+    .logo .cm{ color:var(--accent); }
+    .logo .oney{ color:#111827; }
+
+    .title{
+      font-size:34px;
+      font-weight:950;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      min-width:0;
+    }
+
+    .pill{
+      padding:8px 14px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      font-size:13px;
+      color:var(--muted);
+      box-shadow:0 10px 26px rgba(17,24,39,.10);
+      white-space:nowrap;
+    }
+
+    /* Tabs */
+    .tabsWrap{
+      position:sticky;
+      top:var(--stickyTop);
+      z-index:20;
+      padding:10px 0 12px;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .tabs{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+
+    .tab{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      height:var(--tabH);
+      padding:0 14px;
+      border-radius:12px;
+      background:linear-gradient(180deg,var(--deepRed),var(--deepRed2));
+      border:1px solid rgba(0,0,0,.18);
+      color:#fff;
+      box-shadow:0 8px 18px rgba(0,0,0,.18);
+      cursor:pointer;
+      font-weight:950;
+      font-size:13px;
+      user-select:none;
+      transition:background .16s ease, color .16s ease, box-shadow .16s ease, transform .08s ease;
+      flex:0 0 auto;
+    }
+
+    .tab:hover{
+      background:linear-gradient(180deg,var(--deepRedHover),var(--deepRed2));
+      box-shadow:0 10px 22px rgba(0,0,0,.22);
+    }
+    .tab:active{
+      transform:translateY(1px);
+      box-shadow:0 6px 14px rgba(0,0,0,.18);
+    }
+
+    .tab.active{
+      background:linear-gradient(180deg,#fff,#f3f4f6);
+      color:#111827;
+      border-color:rgba(17,24,39,.18);
+      box-shadow:0 10px 20px rgba(17,24,39,.14);
+    }
+
+    .tab .ico{
+      width:26px;
+      height:26px;
+      display:grid;
+      place-items:center;
+      border-radius:10px;
+      font-size:14px;
+      line-height:1;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.18);
+      flex:0 0 auto;
+    }
+    .tab.active .ico{
+      background:rgba(217,44,44,.10);
+      border-color:rgba(217,44,44,.22);
+    }
+    .tab .lbl{ white-space:nowrap; }
+
+    .tab .count{
+      margin-left:2px;
+      font-size:12px;
+      font-weight:950;
+      padding:4px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.18);
+      color:rgba(255,255,255,.92);
+      flex:0 0 auto;
+    }
+    .tab.active .count{
+      background:#fff;
+      color:#374151;
+      border-color:rgba(17,24,39,.14);
+    }
+
+    .page{ display:none; margin-top:12px; }
+    .page.active{ display:block; }
+
+    .card{
+      background:#ffffffde;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .hd{
+      position:relative;
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .hd h3{
+      margin:0;
+      font-size:16px;
+      font-weight:950;
+      text-align:center;
+      padding:0 70px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      color:#111827;
+    }
+
+    .tag{
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .bd{
+      padding:12px 14px;
+      overflow:auto;
+      flex:1;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .card.orange .hd{ background:linear-gradient(180deg,rgba(253,186,116,.85),rgba(255,237,213,.85)); }
+    .card.red .hd{ background:linear-gradient(180deg,rgba(255,176,176,.9),rgba(255,213,213,.9)); }
+    .card.green .hd{ background:linear-gradient(180deg,rgba(167,243,208,.9),rgba(209,250,229,.9)); }
+    .card.purple .hd{ background:linear-gradient(180deg,rgba(196,181,253,.9),rgba(237,233,254,.9)); }
+
+    /* ===== kanban (fast page) - keep ===== */
+    .kanban{ display:flex; flex-direction:column; gap:18px; }
+    .kanban__lane{ border-radius:12px; padding:10px 14px 12px; }
+    .kanban__lane--urgent{ background:rgba(196,181,253,.35); }
+    .kanban__lane--soon{ background:rgba(196,181,253,.22); }
+    .kanban__lane--normal{ background:rgba(196,181,253,.12); }
+    .kanban__header{ display:flex; align-items:center; gap:8px; margin-bottom:10px; font-weight:700; font-size:15px; color:rgba(88,28,135,1); }
+    .kanban__badge{ font-size:11px; font-weight:700; padding:2px 8px; border-radius:999px; background:rgba(139,92,246,.18); color:rgba(88,28,135,.9); }
+    .kanban__chips{ display:flex; flex-wrap:wrap; gap:8px; }
+    .kanban__chip{ display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:8px; background:#fff; border:1px solid rgba(139,92,246,.2); font-size:13px; color:#1e1b3a; transition:box-shadow .15s, border-color .15s; }
+    .kanban__chip:hover{ border-color:rgba(139,92,246,.5); box-shadow:0 2px 8px rgba(139,92,246,.12); }
+    .kanban__chip-code{ font-weight:700; color:rgba(88,28,135,1); font-family:"JetBrains Mono", monospace; }
+    .kanban__chip-name{ color:#444; }
+
+    .card--min-h-sm{ min-height:540px; }
+    .card--min-h-lg{ min-height:700px; }
+
+    /* Desktop table */
+    .deskTable{ display:block; }
+    table{
+      width:100%;
+      min-width:980px;
+      border-collapse:separate;
+      border-spacing:0;
+      font-size:13px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+    }
+    th, td{
+      padding:8px 10px;
+      border-bottom:1px solid rgba(17,24,39,.08);
+      word-break:break-word;
+      vertical-align:top;
+    }
+    th{
+      background:var(--thead);
+      font-weight:900;
+      text-align:left;
+      position:sticky;
+      top:0;
+      z-index:1;
+    }
+    tr:last-child td{ border-bottom:none; }
+    tr.js-warning { background-color: var(--rowWarnBg); }
+    tr.js-warning td:first-child { border-left: 3px solid var(--rowWarnLine); }
+
+    .center{ text-align:center; }
+
+    .loading,.empty{
+      padding:16px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:13px;
+      color:var(--muted);
+      text-align:center;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+
+    /* Notes (old bottom note blocks keep, but Up/Down will use accordion per card) */
+    .notes{
+      margin-top:12px;
+      background:var(--noteBg);
+      border:1px solid var(--noteBorder);
+      border-radius:12px;
+      padding:14px 14px;
+      white-space:pre-wrap;
+      line-height:1.7;
+      color:var(--noteText);
+      font-size:13px;
+      box-shadow:0 10px 24px rgba(17,24,39,.10);
+    }
+    .notes::before{
+      content:"說明";
+      display:block;
+      font-weight:950;
+      color:var(--noteTitle);
+      margin-bottom:10px;
+      font-size:13px;
+      letter-spacing:.2px;
+    }
+
+    /* Desktop Z/C rings */
+    .zcDesk{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+    .zcRingDesk{
+      width:26px;
+      height:26px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      font-size:13px;
+      font-weight:900;
+      line-height:1;
+      background:#fff;
+      border:2px solid var(--offBorder);
+      color:var(--offText);
+      vertical-align:middle;
+    }
+    .zcRingDesk.off{ background:var(--offBg); }
+    .zcRingDesk.z.on{ border-color:var(--zBorder); color:var(--zText); background:#fff; }
+    .zcRingDesk.c.on{ border-color:var(--cBorder); color:var(--cText); background:#fff; }
+
+    .footer{ margin-top:16px; text-align:center; font-size:12px; color:var(--muted); font-weight:700; }
+
+    /* mobile cards hidden on desktop */
+    .mCards{ display:none; }
+
+    @media (max-width: 720px){
+      table{ min-width: 860px; }
+      .logo{ font-size:40px; }
+      .title{ font-size:28px; }
+    }
+
+    /* ===============================
+       ✅ Up/Down Desktop cards ONLY
+       (不影響：即將出關 / 處置中 / 最快N日)
+       =============================== */
+    .udDesk{ display:block; }
+    .udGrid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:12px;
+    }
+    @media (max-width: 860px){
+      .udGrid{ grid-template-columns:1fr; }
+    }
+
+    .udCard{
+      background:var(--mCardBg);
+      border-radius:14px;
+      padding:16px;
+      border:1px solid var(--mCardBorder);
+      box-shadow:var(--mCardShadow);
+    }
+    .udCard.warn{
+      border-color: rgba(234,88,12,.35);
+      box-shadow: 0 1px 4px rgba(234,88,12,0.10);
+    }
+    .udTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    .udId{ min-width:0; }
+    .udCode{
+      font-family:"JetBrains Mono", monospace;
+      font-size:24px;
+      font-weight:700;
+      color:#1a1a1a;
+      line-height:1;
+    }
+    .udName{
+      font-size:14px;
+      color:#666;
+      margin-top:4px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .udRight{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:8px;
+      flex:0 0 auto;
+    }
+    .udGrid2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+    .udBox{
+      background:var(--mSubtle);
+      border-radius:8px;
+      padding:12px 14px;
+      min-width:0;
+    }
+    .udBoxTitle{
+      font-size:12px;
+      color:#999;
+      margin-bottom:6px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .udBoxVal{
+      font-family:"JetBrains Mono", monospace;
+      font-size:20px;
+      font-weight:650;
+      color:#1a1a1a;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .udBoxPct.pos{ background:var(--mRedBg); }
+    .udBoxPct.neg{ background:var(--mGreenBg); }
+    .udBoxPct.pos .udBoxVal{ color:var(--mRedText); font-weight:850; }
+    .udBoxPct.neg .udBoxVal{ color:var(--mGreenText); font-weight:850; }
+
+    /* Accordion button/body (Up/Down cards only) */
+    .accBtn{
+      margin-top:12px;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:10px;
+      background:var(--noteBg);
+      border:1px solid var(--noteBorder);
+      color:var(--noteTitle);
+      font-weight:950;
+      cursor:pointer;
+      user-select:none;
+    }
+    .accBtn .accHint{
+      font-weight:800;
+      font-size:12px;
+      color:rgba(146,64,14,.85);
+    }
+    .accBody{
+      display:none;
+      margin-top:10px;
+      background:var(--noteBg);
+      border:1px solid var(--noteBorder);
+      border-radius:10px;
+      padding:12px 12px;
+      line-height:1.6;
+      font-size:13px;
+      color:var(--noteText);
+    }
+    .udCard.open .accBody{ display:block; }
+    .mCard.open .accBody{ display:block; } /* mobile cards accordion */
+
+    /* ===== ✅ 你要求的改動：桌機 Up/Down 右上循環框框樣式 + 資券圈圈（跟手機一致） ===== */
+    /* 這些 class 會被桌機 Up/Down 用到，但不會影響其他專區 */
+    .mCycle{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+      border:1px solid #e5e7eb;
+      background:var(--mSubtle2);
+      color:#888;
+    }
+    .mCycle.warn{
+      background:var(--mCycleWarnBg);
+      color:var(--mCycleWarnText);
+      border-color:var(--mCycleWarnBorder);
+    }
+    .zcRow{ display:flex; gap:8px; }
+    .zcRing{
+      width:26px;
+      height:26px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      font-size:13px;
+      font-weight:900;
+      line-height:1;
+      background:#fff;
+      border:2px solid var(--offBorder);
+      color:var(--offText);
+    }
+    .zcRing.off{ background:var(--offBg); }
+    .zcRing.z.on{ border-color:var(--zBorder); color:var(--zText); background:#fff; }
+    .zcRing.c.on{ border-color:var(--cBorder); color:var(--cText); background:#fff; }
+
+    /* ===== ✅ 注意事項展開文字：文字內容1 粗體 + 條款前空一行 ===== */
+    .accBody .t1{ font-weight:950; }
+    .accBody .gap{ height:10px; }
+    .accBody .clause{ font-weight:400; }
+
+    /* ===== Mobile cards ===== */
+    @media (max-width: 560px){
+      .wrap{ padding:14px 12px 24px; }
+      .topbar{ align-items:flex-start; margin-bottom:10px; gap:10px; }
+      .brand{ width:100%; align-items:center; gap:10px; }
+      .logo{ font-size:34px; }
+      .title{ font-size:22px; }
+      .pill{ width:100%; text-align:center; padding:8px 12px; font-size:12.5px; }
+
+      .tabs{
+        flex-wrap:nowrap;
+        overflow-x:auto;
+        -webkit-overflow-scrolling: touch;
+        padding:2px 2px 6px;
+        gap:8px;
+        scrollbar-width:none;
+        -ms-overflow-style:none;
+      }
+      .tabs::-webkit-scrollbar{ display:none; }
+
+      .tab{
+        height: var(--tabH_m);
+        padding:0 12px;
+        border-radius:12px;
+        font-size:12.5px;
+        box-shadow:0 6px 14px rgba(0,0,0,.16);
+      }
+      .tab .ico{ width:24px;height:24px; border-radius:9px; font-size:13px; }
+      .tab .count{ padding:3px 8px; font-size:11px; }
+
+      .bd{ padding:10px 10px; }
+      .hd h3{ padding:0 62px; font-size:15px; }
+
+      .deskTable{ display:none; }
+      .udDesk{ display:none; } /* ✅ mobile 只顯示原本 mCards 風格 */
+      .mCards{ display:flex; flex-direction:column; gap:12px; }
+
+      .mCard{
+        background:var(--mCardBg);
+        border-radius:12px;
+        padding:16px;
+        border:1px solid var(--mCardBorder);
+        box-shadow:var(--mCardShadow);
+      }
+      .mCard.warn{
+        border-color: rgba(234,88,12,.35);
+        box-shadow: 0 1px 4px rgba(234,88,12,0.10);
+      }
+
+      .mTop{
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-start;
+        gap:12px;
+        margin-bottom:14px;
+      }
+
+      .mId{ min-width:0; }
+
+      .mCode{
+        font-family:"JetBrains Mono", monospace;
+        font-size:24px;
+        font-weight:700;
+        color:#1a1a1a;
+        line-height:1;
+      }
+
+      .mName{
+        font-size:14px;
+        color:#666;
+        margin-top:4px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+      }
+
+      .mRight{
+        display:flex;
+        flex-direction:column;
+        align-items:flex-end;
+        gap:8px;
+        flex: 0 0 auto;
+      }
+
+      .mGrid{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+      }
+
+      .mBox{
+        background:var(--mSubtle);
+        border-radius:8px;
+        padding:12px 14px;
+        min-width:0;
+      }
+      .mBoxTitle{
+        font-size:12px;
+        color:#999;
+        margin-bottom:6px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+      }
+      .mBoxVal{
+        font-family:"JetBrains Mono", monospace;
+        font-size:20px;
+        font-weight:650;
+        color:#1a1a1a;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+      }
+
+      .mBoxVal.date{
+        font-size:15px;
+        font-weight:650;
+        white-space:normal;
+        overflow:visible;
+        text-overflow:clip;
+        word-break:break-word;
+        line-height:1.25;
+      }
+
+      .mBoxPct.pos{ background:var(--mRedBg); }
+      .mBoxPct.neg{ background:var(--mGreenBg); }
+      .mBoxPct.pos .mBoxVal{ color:var(--mRedText); font-weight:850; }
+      .mBoxPct.neg .mBoxVal{ color:var(--mGreenText); font-weight:850; }
+
+      .notes{
+        margin-top:12px;
+        border-radius:10px;
+        padding:12px 12px;
+        line-height:1.6;
+        font-size:13px;
+        box-shadow:none;
+      }
+      .notes::before{ margin-bottom:8px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo"><span class="cm">CM</span><span class="oney">oney</span></div>
+      <div class="title">處置股票預測</div>
+    </div>
+    <div class="pill" id="updatedPill">版本：20260204-D（data.json）</div>
+  </div>
+
+  <div class="tabsWrap">
+    <div class="tabs" role="tablist" aria-label="sections">
+      <button class="tab active" data-page="soon" role="tab" aria-selected="true">
+        <span class="ico">⏳</span><span class="lbl">即將出關</span>
+        <span class="count" id="navSoon">0</span>
+      </button>
+
+      <button class="tab" data-page="disposed" role="tab" aria-selected="false">
+        <span class="ico">⛓️</span><span class="lbl">處置中</span>
+        <span class="count" id="navDisposed">0</span>
+      </button>
+
+      <button class="tab" data-page="up" role="tab" aria-selected="false">
+        <span class="ico">🚨</span><span class="lbl">漲N%進處置</span>
+        <span class="count" id="navUp">0</span>
+      </button>
+
+      <button class="tab" data-page="down" role="tab" aria-selected="false">
+        <span class="ico">🔔</span><span class="lbl">跌N%進處置</span>
+        <span class="count" id="navDown">0</span>
+      </button>
+
+      <button class="tab" data-page="fast" role="tab" aria-selected="false">
+        <span class="ico">⚡</span><span class="lbl">最快N日進處置</span>
+        <span class="count" id="navFast">0</span>
+      </button>
+    </div>
+  </div>
+
+  <section class="page active" id="page-soon">
+    <div class="card orange card--min-h-sm">
+      <div class="hd"><h3>即將出關</h3><span class="tag" id="tagSoon">0</span></div>
+      <div class="bd" id="tblSoon"><div class="loading">資料讀取中…</div></div>
+    </div>
+  </section>
+
+  <section class="page" id="page-disposed">
+    <div class="card orange card--min-h-sm">
+      <div class="hd"><h3>處置中股票</h3><span class="tag" id="tagDisposed">0</span></div>
+      <div class="bd" id="tblDisposed"><div class="loading">資料讀取中…</div></div>
+    </div>
+  </section>
+
+  <section class="page" id="page-up">
+    <div class="card red card--min-h-lg" id="cardUp">
+      <div class="hd"><h3 id="titleUp">漲N%進處置</h3><span class="tag" id="tagUp">0</span></div>
+      <div class="bd">
+        <div id="tblUp"><div class="loading">資料讀取中…</div></div>
+        <div id="noteUp" class="notes" style="display:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="page-down">
+    <div class="card green card--min-h-lg" id="cardDown">
+      <div class="hd"><h3 id="titleDown">跌N%進處置</h3><span class="tag" id="tagDown">0</span></div>
+      <div class="bd">
+        <div id="tblDown"><div class="loading">資料讀取中…</div></div>
+        <div id="noteDown" class="notes" style="display:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="page-fast">
+    <div class="card purple card--min-h-sm">
+      <div class="hd"><h3>最快N日進處置</h3><span class="tag" id="tagFast">0</span></div>
+      <div class="bd" id="tblFast"><div class="loading">資料讀取中…</div></div>
+    </div>
+  </section>
+
+  <div class="footer">© CMoney. All rights reserved.</div>
+</div>
+
+<script>
+  const DATA_PATH = "./data.json";
+
+  function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+  function num(v){
+    const m=String(v??"").replace(/,/g,"").match(/-?[0-9]+(\.[0-9]+)?/);
+    return m?Number(m[0]):NaN;
+  }
+  function fmtDate(s){
+    const t = String(s??"").trim();
+    if(!t) return "";
+    if(/^\d{8}$/.test(t)) return `${t.slice(0,4)}/${t.slice(4,6)}/${t.slice(6,8)}`;
+    return t;
+  }
+
+  function findKey(headers, kws, fallbackIndex){
+    const hs = headers || [];
+    for(const kw of kws){
+      const k = hs.find(h => String(h).replace(/\s/g,"").includes(kw));
+      if(k) return k;
+    }
+    return (fallbackIndex==null) ? null : (hs[fallbackIndex] || null);
+  }
+
+  function findCycleKey(headers, row){
+    const byHeader = (headers||[]).find(h => String(h).replace(/\s/g,"").includes("循環時間"));
+    if(byHeader) return byHeader;
+    const keys = Object.keys(row||{});
+    return keys.find(k => String(k).replace(/\s/g,"").includes("循環時間")) || null;
+  }
+
+  function hasTriggerFields(headers){
+    const hs = (headers||[]).map(h=>String(h).replace(/\s/g,""));
+    const hasPrice = hs.some(h => h.includes("觸發價"));
+    const hasPct   = hs.some(h => h.includes("觸發") && h.includes("%"));
+    return hasPrice || hasPct;
+  }
+
+  function buildZCCell(z, c){
+    const zOn = Number(z) === 1;
+    const cOn = Number(c) === 1;
+    return `
+      <span class="zcDesk">
+        <span class="zcRingDesk z ${zOn ? "on" : "off"}">資</span>
+        <span class="zcRingDesk c ${cOn ? "on" : "off"}">券</span>
+      </span>
+    `;
+  }
+
+  function mergeFinanceColumnsForDesk(pack){
+    if (!pack?.headers || !pack.rows) return pack;
+
+    const hasZ = pack.headers.includes("融資資格");
+    const hasC = pack.headers.includes("融券資格");
+    if (!hasZ || !hasC) return pack;
+
+    const newHeaders = pack.headers.filter(
+      h => h !== "融資資格" && h !== "融券資格"
+    );
+    newHeaders.push("融資券資格");
+
+    const newRows = pack.rows.map(r => {
+      return {
+        ...r,
+        "融資券資格": buildZCCell(r["融資資格"], r["融券資格"])
+      };
+    });
+
+    return {
+      ...pack,
+      headers: newHeaders,
+      rows: newRows
+    };
+  }
+
+  function cyclePillHTML(cycleVal){
+    const v = String(cycleVal ?? "").trim();
+    const n = num(v);
+    const warn = !isNaN(n) && n >= 20;
+    const stroke = warn ? '#ea580c' : '#9ca3af';
+    return `
+      <span class="mCycle ${warn ? 'warn' : ''}">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="2.5" stroke-linecap="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12,6 12,12 16,14"></polyline>
+        </svg>
+        循環 ${esc(v || '—')} 分
+      </span>
+    `;
+  }
+
+  function zcRingsHTML(z, c){
+    const zOn = Number(z) === 1;
+    const cOn = Number(c) === 1;
+    return `
+      <div class="zcRow">
+        <span class="zcRing z ${zOn ? 'on' : 'off'}">資</span>
+        <span class="zcRing c ${cOn ? 'on' : 'off'}">券</span>
+      </div>
+    `;
+  }
+
+  /* ===============================
+     ✅ 注意事項：文字內容1 粗體 + 條款前空一行（手機/桌機共用）
+     =============================== */
+  const FORCED_CLAUSE = "處置股票條款中有類股相關條款：其六日漲跌百分比與全體有價證券及同類有價證券依本項規定計算之平均值的差幅均在百分之二十以上，才符合條款。";
+
+  function getNoteKeys(headers){
+    const hs = headers || [];
+    const k1 = hs.find(h => String(h).replace(/\s/g,"").includes("文字內容1")) || null;
+    const k2 = hs.find(h => String(h).replace(/\s/g,"").includes("文字內容2")) || null;
+    const k3 = hs.find(h => String(h).replace(/\s/g,"").includes("補充說明")) || null;
+    return {k1,k2,k3};
+  }
+
+  function cleanText(v){
+    const s = String(v ?? "").trim();
+    if(!s) return "";
+    if(s.toLowerCase() === "null") return "";
+    return s;
+  }
+
+  // ✅ 改為回傳「HTML字串」，方便做粗體與空行
+  function buildNoteHTML(t1, t2, t3){
+    const a = cleanText(t1);
+    const b = cleanText(t2);
+    const c = cleanText(t3);
+
+    if(!a && !b && !c) return "";
+
+    let html = `<div><div style="font-weight:950;margin-bottom:6px;">【注意事項】</div>`;
+
+    if(a){
+      html += `<div class="t1">${esc(a)}</div>`;
+      html += `<div class="gap"></div>`; // ✅ 空一行（視覺間距）
+    }
+
+    // ✅ 條款（保留你原本的 "*"）
+    html += `<div class="clause">*${esc(FORCED_CLAUSE)}</div>`;
+
+    if(b){
+      html += `<div class="t2">${esc(b)}</div>`;
+    }
+    if(c){
+      html += `<div style="margin-top:10px;">${esc(c)}</div>`;
+    }
+
+    html += `</div>`;
+    return html;
+  }
+
+  function accHTML(noteHTML){
+    if(!noteHTML) return "";
+    return `
+      <button class="accBtn" type="button" data-acc="toggle">
+        <span>注意事項</span>
+        <span class="accHint">點一下展開</span>
+      </button>
+      <div class="accBody">${noteHTML}</div>
+    `;
+  }
+
+  function renderMobileTriggerJSX(pack){
+    const headers = pack.headers || [];
+    const rows = pack.rows || [];
+
+    const codeKey = findKey(headers, ["標的代號","股票代號","代號"], 0);
+    const nameKey = findKey(headers, ["標的名稱","股票名稱","名稱"], 1);
+
+    const trigPriceKey = findKey(headers, ["觸發價","觸發價格"], null);
+    const trigPctKey =
+      (headers||[]).find(h => String(h).replace(/\s/g,"").includes("觸發") && String(h).includes("%"))
+      || findKey(headers, ["觸發漲幅","觸發跌幅"], null);
+
+    const {k1,k2,k3} = getNoteKeys(headers);
+
+    let html = `<div class="mCards">`;
+    rows.forEach((r)=>{
+      const cycleKey = findCycleKey(headers, r);
+      const cycleVal = cycleKey ? r[cycleKey] : "";
+      const isWarn = num(cycleVal) >= 20;
+
+      const code = esc(String(r[codeKey] ?? "").trim());
+      const name = esc(String(r[nameKey] ?? "").trim());
+
+      const price = trigPriceKey ? String(r[trigPriceKey] ?? "").trim() : "";
+      const pct = trigPctKey ? String(r[trigPctKey] ?? "").trim() : "";
+
+      const pctNum = num(pct);
+      const isPositive = !isNaN(pctNum) && pctNum >= 0;
+
+      const z = (r["__z"]!=null) ? r["__z"] : r["資"];
+      const c = (r["__c"]!=null) ? r["__c"] : r["券"];
+
+      const noteHTML = buildNoteHTML(
+        k1 ? r[k1] : "",
+        k2 ? r[k2] : "",
+        k3 ? r[k3] : ""
+      );
+
+      html += `
+        <div class="mCard ${isWarn ? "warn" : ""}" ${noteHTML ? `data-acc-item="1"` : ""}>
+          <div class="mTop">
+            <div class="mId">
+              <div class="mCode">${code || "—"}</div>
+              <div class="mName">${name || ""}</div>
+            </div>
+
+            <div class="mRight">
+              ${cyclePillHTML(cycleVal)}
+              ${zcRingsHTML(z, c)}
+            </div>
+          </div>
+
+          <div class="mGrid">
+            <div class="mBox">
+              <div class="mBoxTitle">觸發價 (元)</div>
+              <div class="mBoxVal">${esc(price || "—")}</div>
+            </div>
+
+            <div class="mBox mBoxPct ${isPositive ? 'pos' : 'neg'}">
+              <div class="mBoxTitle">${esc(trigPctKey || "觸發漲幅 (%)")}</div>
+              <div class="mBoxVal">${esc(pct || "—")}${pct ? "%" : ""}</div>
+            </div>
+          </div>
+
+          ${noteHTML ? accHTML(noteHTML) : ""}
+        </div>
+      `;
+    });
+    html += `</div>`;
+    return html;
+  }
+
+  function renderMobilePeriodJSX(pack){
+    const headers = pack.headers || [];
+    const rows = pack.rows || [];
+
+    const codeKey  = findKey(headers, ["標的代號","股票代號","代號"], 0);
+    const nameKey  = findKey(headers, ["標的名稱","股票名稱","名稱"], 1);
+    const startKey = findKey(headers, ["處置時間起","處置起","時間起","起"], 2);
+    const endKey   = findKey(headers, ["處置時間迄","處置迄","時間迄","迄","到"], 3);
+
+    let html = `<div class="mCards">`;
+    rows.forEach(r=>{
+      const cycleKey = findCycleKey(headers, r);
+      const cycleVal = cycleKey ? r[cycleKey] : "";
+      const isWarn = num(cycleVal) >= 20;
+
+      const code = esc(String(r[codeKey] ?? "").trim());
+      const name = esc(String(r[nameKey] ?? "").trim());
+
+      const s = fmtDate(r[startKey]);
+      const e = fmtDate(r[endKey]);
+
+      html += `
+        <div class="mCard ${isWarn ? "warn" : ""}">
+          <div class="mTop">
+            <div class="mId">
+              <div class="mCode">${code || "—"}</div>
+              <div class="mName">${name || ""}</div>
+            </div>
+
+            <div class="mRight">
+              ${cyclePillHTML(cycleVal)}
+            </div>
+          </div>
+
+          <div class="mGrid">
+            <div class="mBox">
+              <div class="mBoxTitle">處置時間起</div>
+              <div class="mBoxVal date">${esc(s || "—")}</div>
+            </div>
+
+            <div class="mBox">
+              <div class="mBoxTitle">處置時間迄</div>
+              <div class="mBoxVal date">${esc(e || "—")}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+    return html;
+  }
+
+  function render(el, pack, center=[], rawCols=[]){
+    if(!pack||!pack.headers||!pack.rows?.length){
+      el.innerHTML = `<div class="empty">沒有相關股票</div>`;
+      return;
+    }
+
+    const cs=new Set(center);
+    const raw=new Set(rawCols);
+
+    let t=`<div class="deskTable"><table><thead><tr>`;
+    pack.headers.forEach(x=>t+=`<th class="${cs.has(x)?"center":""}">${esc(x)}</th>`);
+    t+=`</tr></thead><tbody>`;
+
+    pack.rows.forEach(r=>{
+      const cycleKey = findCycleKey(pack.headers, r);
+      const cycleVal = cycleKey ? r[cycleKey] : undefined;
+      const isWarn = num(cycleVal) >= 20;
+
+      t+=`<tr ${isWarn ? 'class="js-warning"' : ""}>`;
+      pack.headers.forEach(k=>{
+        const v = r[k];
+        const cell = raw.has(k) ? String(v??"") : esc(v);
+        t+=`<td class="${cs.has(k)?"center":""}">${cell}</td>`;
+      });
+      t+=`</tr>`;
+    });
+
+    t+=`</tbody></table></div>`;
+
+    const m = hasTriggerFields(pack.headers) ? renderMobileTriggerJSX(pack) : renderMobilePeriodJSX(pack);
+    el.innerHTML = t + m;
+  }
+
+  function renderUpDownSection(el, pack){
+    if(!pack||!pack.headers||!pack.rows?.length){
+      el.innerHTML = `<div class="empty">沒有相關股票</div>`;
+      return;
+    }
+
+    const headers = pack.headers || [];
+    const rows = pack.rows || [];
+
+    const codeKey = findKey(headers, ["標的代號","股票代號","代號"], 0);
+    const nameKey = findKey(headers, ["標的名稱","股票名稱","名稱"], 1);
+
+    const trigPriceKey = findKey(headers, ["觸發價","觸發價格"], null);
+    const trigPctKey =
+      (headers||[]).find(h => String(h).replace(/\s/g,"").includes("觸發") && String(h).includes("%"))
+      || findKey(headers, ["觸發漲幅","觸發跌幅"], null);
+
+    const {k1,k2,k3} = getNoteKeys(headers);
+
+    let desk = `<div class="udDesk"><div class="udGrid">`;
+    rows.forEach((r)=>{
+      const cycleKey = findCycleKey(headers, r);
+      const cycleVal = cycleKey ? r[cycleKey] : "";
+      const isWarn = num(cycleVal) >= 20;
+
+      const code = esc(String(r[codeKey] ?? "").trim());
+      const name = esc(String(r[nameKey] ?? "").trim());
+
+      const price = trigPriceKey ? String(r[trigPriceKey] ?? "").trim() : "";
+      const pct = trigPctKey ? String(r[trigPctKey] ?? "").trim() : "";
+
+      const pctNum = num(pct);
+      const isPositive = !isNaN(pctNum) && pctNum >= 0;
+
+      const z = (r["__z"]!=null) ? r["__z"] : r["資"];
+      const c = (r["__c"]!=null) ? r["__c"] : r["券"];
+
+      const noteHTML = buildNoteHTML(
+        k1 ? r[k1] : "",
+        k2 ? r[k2] : "",
+        k3 ? r[k3] : ""
+      );
+
+      desk += `
+        <div class="udCard ${isWarn ? "warn" : ""}" ${noteHTML ? `data-acc-item="1"` : ""}>
+          <div class="udTop">
+            <div class="udId">
+              <div class="udCode">${code || "—"}</div>
+              <div class="udName">${name || ""}</div>
+            </div>
+
+            <div class="udRight">
+              ${cyclePillHTML(cycleVal)}
+              ${zcRingsHTML(z, c)}
+            </div>
+          </div>
+
+          <div class="udGrid2">
+            <div class="udBox">
+              <div class="udBoxTitle">觸發價 (元)</div>
+              <div class="udBoxVal">${esc(price || "—")}</div>
+            </div>
+
+            <div class="udBox udBoxPct ${isPositive ? "pos" : "neg"}">
+              <div class="udBoxTitle">${esc(trigPctKey || "觸發漲幅 (%)")}</div>
+              <div class="udBoxVal">${esc(pct || "—")}${pct ? "%" : ""}</div>
+            </div>
+          </div>
+
+          ${noteHTML ? accHTML(noteHTML) : ""}
+        </div>
+      `;
+    });
+    desk += `</div></div>`;
+
+    const mobile = renderMobileTriggerJSX(pack);
+    el.innerHTML = desk + mobile;
+  }
+
+  function renderFast(el, pack){
+    if(!pack||!pack.headers||!pack.rows||!pack.rows.length){
+      el.innerHTML = '<div class="empty">沒有相關股票</div>';
+      return;
+    }
+    var fastKey = pack.headers.find(function(h){ return h.indexOf("最快")!==-1; }) || pack.headers[pack.headers.length-1];
+    var codeKey = pack.headers.find(function(h){ return h.indexOf("代號")!==-1; }) || pack.headers[0];
+    var nameKey = pack.headers.find(function(h){ return h.indexOf("名稱")!==-1; }) || pack.headers[1];
+
+    var groups = {};
+    var dayOrder = [];
+    pack.rows.forEach(function(r){
+      var d = String(r[fastKey]||"").trim() || "?";
+      if(!groups[d]){ groups[d]=[]; dayOrder.push(d); }
+      groups[d].push(r);
+    });
+    dayOrder.sort(function(a,b){ return (Number(a)||999)-(Number(b)||999); });
+
+    var html = '<div class="kanban">';
+    dayOrder.forEach(function(day){
+      var items = groups[day];
+      var n = Number(day)||999;
+      var lvl = n<=1?'urgent':n<=3?'soon':'normal';
+      html += '<div class="kanban__lane kanban__lane--'+lvl+'">';
+      html += '<div class="kanban__header">';
+      html += '<span>'+esc(day)+' 日</span>';
+      html += '<span class="kanban__badge">'+items.length+' 檔</span>';
+      html += '</div>';
+      html += '<div class="kanban__chips">';
+      items.forEach(function(r){
+        html += '<div class="kanban__chip">';
+        html += '<span class="kanban__chip-code">'+esc(String(r[codeKey]||""))+'</span>';
+        html += '<span class="kanban__chip-name">'+esc(String(r[nameKey]||""))+'</span>';
+        html += '</div>';
+      });
+      html += '</div></div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+  }
+
+  const PAGES = ["soon","disposed","up","down","fast"];
+  function setActive(page){
+    if(!PAGES.includes(page)) page="soon";
+
+    document.querySelectorAll(".tab").forEach(btn=>{
+      const on = btn.dataset.page === page;
+      btn.classList.toggle("active", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+
+    PAGES.forEach(p=>{
+      const el = document.getElementById("page-"+p);
+      if(el) el.classList.toggle("active", p===page);
+    });
+
+    if(location.hash !== "#"+page) history.replaceState(null,"","#"+page);
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  document.querySelectorAll(".tab").forEach(btn=>{
+    btn.addEventListener("click", ()=> setActive(btn.dataset.page));
+  });
+
+  function initFromHash(){
+    const h = (location.hash||"").replace("#","").trim();
+    setActive(PAGES.includes(h) ? h : "soon");
+  }
+  window.addEventListener("hashchange", initFromHash);
+
+  const updatedPill = document.getElementById("updatedPill");
+  const titleUp = document.getElementById("titleUp");
+  const titleDown = document.getElementById("titleDown");
+
+  const tblSoon = document.getElementById("tblSoon");
+  const tblDisposed = document.getElementById("tblDisposed");
+  const tblUp = document.getElementById("tblUp");
+  const tblDown = document.getElementById("tblDown");
+  const tblFast = document.getElementById("tblFast");
+
+  const noteUp = document.getElementById("noteUp");
+  const noteDown = document.getElementById("noteDown");
+
+  const cardUp = document.getElementById("cardUp");
+  const cardDown = document.getElementById("cardDown");
+
+  const tagSoon = document.getElementById("tagSoon");
+  const tagDisposed = document.getElementById("tagDisposed");
+  const tagUp = document.getElementById("tagUp");
+  const tagDown = document.getElementById("tagDown");
+  const tagFast = document.getElementById("tagFast");
+
+  const navSoon = document.getElementById("navSoon");
+  const navDisposed = document.getElementById("navDisposed");
+  const navUp = document.getElementById("navUp");
+  const navDown = document.getElementById("navDown");
+  const navFast = document.getElementById("navFast");
+
+  window.addEventListener("error", (e) => {
+    try { updatedPill.textContent = "更新時間：JS錯誤（手機）"; } catch(_) {}
+    console.error(e?.error || e?.message || e);
+  });
+
+  async function loadAllDataFromJson(){
+    const url = `${DATA_PATH}?v=${Date.now()}`;
+    const r = await fetch(url, { cache: "no-store" });
+    if(!r.ok) throw new Error(`fetch ${DATA_PATH} HTTP ${r.status}`);
+    return await r.json();
+  }
+
+  function bindAccordions(root){
+    if(!root) return;
+    root.addEventListener("click", (ev)=>{
+      const btn = ev.target?.closest?.('[data-acc="toggle"]');
+      if(!btn) return;
+      const card = btn.closest(".udCard, .mCard");
+      if(!card) return;
+      card.classList.toggle("open");
+    });
+  }
+
+  async function load(){
+    try{
+      const res = await loadAllDataFromJson();
+
+      updatedPill.textContent = "更新時間：" + new Date(res.updatedAt).toLocaleString();
+
+      const d = fmtDate(res.tradeDate||"");
+      titleUp.textContent = d ? `漲N% ${d} 進處置` : "漲N%進處置";
+      titleDown.textContent = d ? `跌N% ${d} 進處置` : "跌N%進處置";
+
+      // ✅ 其他專區完全不動
+      render(tblSoon, res.data.soonRelease);
+      render(tblDisposed, res.data.disposed);
+      renderFast(tblFast, res.data.fastestN);
+
+      const cSoon = res.data.soonRelease?.rows?.length ?? 0;
+      const cDisposed = res.data.disposed?.rows?.length ?? 0;
+      const cUp = res.data.up?.rows?.length ?? 0;
+      const cDown = res.data.down?.rows?.length ?? 0;
+      const cFast = res.data.fastestN?.rows?.length ?? 0;
+
+      tagSoon.textContent = `共${cSoon}檔`;
+      tagDisposed.textContent = `共${cDisposed}檔`;
+      tagUp.textContent = `共${cUp}檔`;
+      tagDown.textContent = `共${cDown}檔`;
+      tagFast.textContent = `共${cFast}檔`;
+
+      navSoon.textContent = `共${cSoon}檔`;
+      navDisposed.textContent = `共${cDisposed}檔`;
+      navUp.textContent = `共${cUp}檔`;
+      navDown.textContent = `共${cDown}檔`;
+      navFast.textContent = `共${cFast}檔`;
+
+      if(!cUp){
+        cardUp.style.display = "none";
+        if((location.hash||"") === "#up") setActive("soon");
+      }else{
+        cardUp.style.display = "flex";
+        const upPackMerged = mergeFinanceColumnsForDesk(res.data.up);
+        renderUpDownSection(tblUp, upPackMerged);
+      }
+
+      if(!cDown){
+        cardDown.style.display = "none";
+        if((location.hash||"") === "#down") setActive("soon");
+      }else{
+        cardDown.style.display = "flex";
+        const downPackMerged = mergeFinanceColumnsForDesk(res.data.down);
+        renderUpDownSection(tblDown, downPackMerged);
+      }
+
+      if(noteUp) noteUp.style.display = "none";
+      if(noteDown) noteDown.style.display = "none";
+
+      bindAccordions(tblUp);
+      bindAccordions(tblDown);
+
+      initFromHash();
+    }catch(err){
+      console.error(err);
+      updatedPill.textContent = "更新時間：讀取失敗";
+      tblSoon.innerHTML = `<div class="empty">讀取 data.json 失敗</div>`;
+      tblDisposed.innerHTML = `<div class="empty">讀取 data.json 失敗</div>`;
+      tblUp.innerHTML = `<div class="empty">讀取 data.json 失敗</div>`;
+      tblDown.innerHTML = `<div class="empty">讀取 data.json 失敗</div>`;
+      tblFast.innerHTML = `<div class="empty">讀取 data.json 失敗</div>`;
+      initFromHash();
+    }
+  }
+
+  load();
+</script>
+</body>
+</html>
