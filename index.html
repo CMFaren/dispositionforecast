@@ -993,8 +993,13 @@
       const pctNum = num(pct);
       const isPositive = !isNaN(pctNum) && pctNum >= 0;
 
-      const z = (r["__z"]!=null) ? r["__z"] : r["資"];
-      const c = (r["__c"]!=null) ? r["__c"] : r["券"];
+      const z = (r["融資資格"] != null) ? r["融資資格"]
+        : (r["__z"] != null) ? r["__z"]
+        : r["資"];
+
+      const c = (r["融券資格"] != null) ? r["融券資格"]
+        : (r["__c"] != null) ? r["__c"]
+        : r["券"];
 
       const noteHTML = buildNoteHTML(
         k1 ? r[k1] : "",
@@ -1155,8 +1160,13 @@
       const pctNum = num(pct);
       const isPositive = !isNaN(pctNum) && pctNum >= 0;
 
-      const z = (r["__z"]!=null) ? r["__z"] : r["資"];
-      const c = (r["__c"]!=null) ? r["__c"] : r["券"];
+      const z = (r["融資資格"] != null) ? r["融資資格"]
+        : (r["__z"] != null) ? r["__z"]
+        : r["資"];
+
+      const c = (r["融券資格"] != null) ? r["融券資格"]
+        : (r["__c"] != null) ? r["__c"]
+        : r["券"];
 
       const noteHTML = buildNoteHTML(
         k1 ? r[k1] : "",
